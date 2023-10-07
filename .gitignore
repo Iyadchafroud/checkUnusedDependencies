@@ -1,0 +1,15 @@
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files and npm debug logs
+*.log
+npm-debug.log*
+
+# Ignore .env files which may contain sensitive information
+.env
+
+# Ignore user-specific config files
+npm-debug.log
+yarn-error.log
+.pnpm-debug.log
