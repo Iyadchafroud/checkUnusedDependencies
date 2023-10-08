@@ -1,11 +1,11 @@
 {
-  "name": "checkdeps",
+  "name": "purgedepsauto",
   "version": "1.0.0",
   "type": "module",
   "description": " A first package to check package json dependencies and delete the ones that are not used  automatically.",
   "main": "index.js",
   "bin": {
-    "checkdeps": "index.js"
+    "purgedeps": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
