@@ -4,7 +4,7 @@ import path from "path";
 import shell from "shelljs";
 import chalk from "chalk";
 const args = process.argv;
-const excludeDependenciesFromPruning = args.slice(2);
+const excludeDependenciesFromPruning = args.slice(args.findIndex((e) => e === "--exclude")+1);
 /**
  * Prunes unused dependencies from the package.json file.
  *
@@ -61,13 +61,37 @@ function jsonDepCheck(packegeName) {
         ...JSON.parse(data).dependencies,
         ...JSON.parse(data).devDependencies,
       ];
-      console.log("🚀  dependenciesCanbePruned:", dependenciesCanbePruned);
-      const PackageJsonToPrune = dependenciesCanbePruned.filter(
-        (dependencie) => !excludeDependenciesFromPruning.includes(dependencie)
-      );
-
-      PackageJsonToPrune.length > 0 &&
-        prunePackageJson(packegeName, PackageJsonToPrune);
+      console.log(chalk.bold.underline.grey(
+        "🚀  unused dependencies Can be Pruned: "
+      ) , chalk.bold.underline.green(
+        dependenciesCanbePruned
+      ) );
+      if (args.includes("--exclude")&&!args.includes("--show")  ) {
+        if (excludeDependenciesFromPruning.length > 0) {
+          const PackageJsonToPrune = dependenciesCanbePruned.filter(
+            (dependencie) => !excludeDependenciesFromPruning.includes(dependencie)
+          );
+    
+          PackageJsonToPrune.length > 0 &&
+            prunePackageJson(packegeName, PackageJsonToPrune);
+        }
+        console.log( chalk.bold.underline.yellowBright(
+          "🚀  you use --exclude  , you need to specify all unused  package that you want to keep it in you package "
+        ) );
+        console.log( chalk.bold.underline.yellowBright(
+          "🚀 if  you want only check you unuseless package please use npx purgedeps --show   "
+        ) );
+      }
+      if (!args.includes("--exclude")&&!args.includes("--show")&& args.includes("--all")) {
+       
+            prunePackageJson(packegeName, dependenciesCanbePruned);
+            console.log( chalk.bold.underline.green(
+              "✅ you successfully pruned all unused dependencies"
+            ) );
+        }
+     
+       
+   
     });
     child.stderr.on("data", function (data) {
       console.log(chalk.bold.underline.red("This is std err message", data));
