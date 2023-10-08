@@ -1,6 +1,6 @@
 {
   "name": "purgedepsauto",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": " A first package to check package json dependencies and delete the ones that are not used  automatically.",
   "main": "index.js",
